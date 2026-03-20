@@ -30,7 +30,7 @@ pub fn build_i2c_example() -> Box<GroupSource> {
         name: "I2C Bus".to_string(),
         path: "i2c".to_string(),
         time_span: TimeRange::new(0, 2_000_000), // 2ms total
-        block_threshold: 50_000, // collapse when > 50μs/px (very zoomed out)
+        block_threshold: 50_000,                 // collapse when > 50μs/px (very zoomed out)
         block_color: "#f0883e".to_string(),
         block_label: "I2C Bus Activity".to_string(),
         children: vec![txn1, txn2, txn3],
@@ -38,12 +38,7 @@ pub fn build_i2c_example() -> Box<GroupSource> {
 }
 
 /// Build a single I2C transaction group with SCL, SDA, and decoded signals.
-fn build_i2c_transaction(
-    name: &str,
-    start_ns: u64,
-    label: &str,
-    color: &str,
-) -> Box<GroupSource> {
+fn build_i2c_transaction(name: &str, start_ns: u64, label: &str, color: &str) -> Box<GroupSource> {
     let clock_period_ns = 10_000; // 100kHz I2C = 10μs period
     let half_period = clock_period_ns / 2;
     let num_bits: u64 = 27; // START + 7addr + RW + ACK + 8data + ACK + 8data + ACK + STOP ≈ 27 clocks

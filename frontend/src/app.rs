@@ -123,7 +123,11 @@ impl Component for App {
                             generation: self.query_generation,
                         });
                     }
-                    ServerMsg::Tile { path, view, generation } => {
+                    ServerMsg::Tile {
+                        path,
+                        view,
+                        generation,
+                    } => {
                         if generation < self.query_generation {
                             return false;
                         }

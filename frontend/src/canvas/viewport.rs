@@ -31,10 +31,7 @@ impl Viewport {
     pub fn fit_time_range(&mut self, range: &TimeRange) {
         let duration = range.duration_ns();
         let pad = duration / 10;
-        self.time_range = TimeRange::new(
-            range.start_ns.saturating_sub(pad),
-            range.end_ns + pad,
-        );
+        self.time_range = TimeRange::new(range.start_ns.saturating_sub(pad), range.end_ns + pad);
         self.v_offset = 0.0;
     }
 

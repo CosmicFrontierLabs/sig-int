@@ -45,12 +45,24 @@ pub struct WaveCanvas {
 }
 
 pub enum CanvasMsg {
-    Wheel { delta_y: f64, client_x: f64 },
-    MouseDown { client_x: f64, client_y: f64 },
-    MouseMove { client_x: f64, client_y: f64 },
+    Wheel {
+        delta_y: f64,
+        client_x: f64,
+    },
+    MouseDown {
+        client_x: f64,
+        client_y: f64,
+    },
+    MouseMove {
+        client_x: f64,
+        client_y: f64,
+    },
     MouseUp,
     /// Click at canvas-relative position — check if it hit a label
-    Click { client_x: f64, client_y: f64 },
+    Click {
+        client_x: f64,
+        client_y: f64,
+    },
 }
 
 const PREFETCH_MARGIN: f64 = 1.0;

@@ -5,10 +5,10 @@ mod signal_source;
 
 use axum::{routing::get, Router};
 use std::sync::Arc;
-use ws_bridge::WsEndpoint;
 use tokio::sync::RwLock;
 use tower_http::cors::{Any, CorsLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use ws_bridge::WsEndpoint;
 
 use crate::signal_source::SourceRegistry;
 

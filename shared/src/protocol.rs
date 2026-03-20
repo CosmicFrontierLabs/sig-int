@@ -55,9 +55,7 @@ pub enum ServerMsg {
         generation: u64,
     },
     /// Full source tree manifest
-    Manifest {
-        manifest: SourceManifest,
-    },
+    Manifest { manifest: SourceManifest },
     /// Parse or compile error
     Error { message: String },
     /// Keep-alive response

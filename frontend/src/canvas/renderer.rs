@@ -66,7 +66,9 @@ fn build_layout(
     let mut y = HEADER_HEIGHT;
 
     for (path, view) in tiles {
-        let SignalView::Waveform { signals, overlay, .. } = view;
+        let SignalView::Waveform {
+            signals, overlay, ..
+        } = view;
 
         // Group header row
         let group_collapsed = collapsed.contains(path);
@@ -81,7 +83,11 @@ fn build_layout(
 
         rows.push(LayoutRow {
             y,
-            height: if group_collapsed { COLLAPSED_HEIGHT } else { ROW_HEIGHT * 0.6 },
+            height: if group_collapsed {
+                COLLAPSED_HEIGHT
+            } else {
+                ROW_HEIGHT * 0.6
+            },
             kind: RowKind::GroupHeader {
                 path: path.clone(),
                 name: group_name,
@@ -101,7 +107,11 @@ fn build_layout(
             let sig_path = format!("{}.{}", path, signal.name);
             let sig_collapsed = collapsed.contains(&sig_path);
 
-            let h = if sig_collapsed { COLLAPSED_HEIGHT } else { ROW_HEIGHT };
+            let h = if sig_collapsed {
+                COLLAPSED_HEIGHT
+            } else {
+                ROW_HEIGHT
+            };
             rows.push(LayoutRow {
                 y,
                 height: h,
@@ -194,7 +204,12 @@ pub fn draw(
 
     for row in &rows {
         match &row.kind {
-            RowKind::GroupHeader { path, name, color, collapsed: is_collapsed } => {
+            RowKind::GroupHeader {
+                path,
+                name,
+                color,
+                collapsed: is_collapsed,
+            } => {
                 // Close previous group span
                 if let Some(prev_path) = current_group_path.take() {
                     let end_y = row.y;
@@ -213,24 +228,48 @@ pub fn draw(
 
                 if *is_collapsed {
                     // Thin colored line for collapsed group
-                    draw_collapsed_indicator(ctx, row.y, COLLAPSED_HEIGHT, color, name, GROUP_LABEL_INDENT);
+                    draw_collapsed_indicator(
+                        ctx,
+                        row.y,
+                        COLLAPSED_HEIGHT,
+                        color,
+                        name,
+                        GROUP_LABEL_INDENT,
+                    );
                 } else {
                     // Group header label
                     draw_group_label(ctx, row.y, row.height, color, name);
                 }
             }
-            RowKind::Signal { path: _, name, signal_idx, collapsed: is_collapsed } => {
+            RowKind::Signal {
+                path: _,
+                name,
+                signal_idx,
+                collapsed: is_collapsed,
+            } => {
                 if row.y + row.height < 0.0 || row.y > h {
                     continue;
                 }
 
                 if *is_collapsed {
-                    draw_collapsed_indicator(ctx, row.y, COLLAPSED_HEIGHT, TEXT_DIM, name, SIGNAL_LABEL_INDENT);
+                    draw_collapsed_indicator(
+                        ctx,
+                        row.y,
+                        COLLAPSED_HEIGHT,
+                        TEXT_DIM,
+                        name,
+                        SIGNAL_LABEL_INDENT,
+                    );
                 } else {
                     // Find the tile and signal data
                     // We need to find which tile this signal belongs to
                     if let Some(group_path) = &current_group_path {
-                        if let Some(SignalView::Waveform { signals, detail_alpha, .. }) = tiles.get(group_path.as_str()) {
+                        if let Some(SignalView::Waveform {
+                            signals,
+                            detail_alpha,
+                            ..
+                        }) = tiles.get(group_path.as_str())
+                        {
                             if let Some(signal) = signals.get(*signal_idx) {
                                 draw_signal_row(ctx, viewport, signal, row.y, *detail_alpha);
                                 // Draw signal label in the gutter
@@ -245,7 +284,10 @@ pub fn draw(
 
     // Close last group span
     if let Some(prev_path) = current_group_path.take() {
-        let end_y = rows.last().map(|r| r.y + r.height).unwrap_or(current_group_y);
+        let end_y = rows
+            .last()
+            .map(|r| r.y + r.height)
+            .unwrap_or(current_group_y);
         group_spans.push(GroupSpan {
             y: current_group_y,
             height: end_y - current_group_y,
@@ -255,7 +297,12 @@ pub fn draw(
 
     // Draw group overlays and borders
     for span in &group_spans {
-        if let Some(SignalView::Waveform { overlay, detail_alpha, .. }) = tiles.get(&span.path) {
+        if let Some(SignalView::Waveform {
+            overlay,
+            detail_alpha,
+            ..
+        }) = tiles.get(&span.path)
+        {
             if let Some(block) = overlay {
                 let overlay_alpha = 1.0 - detail_alpha;
                 if overlay_alpha > 0.001 {
@@ -278,19 +325,48 @@ pub fn draw(
             continue;
         }
         match &row.kind {
-            RowKind::GroupHeader { name, color, collapsed: is_collapsed, .. } => {
+            RowKind::GroupHeader {
+                name,
+                color,
+                collapsed: is_collapsed,
+                ..
+            } => {
                 if *is_collapsed {
-                    draw_collapsed_indicator(ctx, row.y, COLLAPSED_HEIGHT, color, name, GROUP_LABEL_INDENT);
+                    draw_collapsed_indicator(
+                        ctx,
+                        row.y,
+                        COLLAPSED_HEIGHT,
+                        color,
+                        name,
+                        GROUP_LABEL_INDENT,
+                    );
                 } else {
                     draw_group_label(ctx, row.y, row.height, color, name);
                 }
             }
-            RowKind::Signal { name, collapsed: is_collapsed, signal_idx, .. } => {
+            RowKind::Signal {
+                name,
+                collapsed: is_collapsed,
+                signal_idx,
+                ..
+            } => {
                 if *is_collapsed {
-                    draw_collapsed_indicator(ctx, row.y, COLLAPSED_HEIGHT, TEXT_DIM, name, SIGNAL_LABEL_INDENT);
+                    draw_collapsed_indicator(
+                        ctx,
+                        row.y,
+                        COLLAPSED_HEIGHT,
+                        TEXT_DIM,
+                        name,
+                        SIGNAL_LABEL_INDENT,
+                    );
                 } else {
                     if let Some(group_path) = find_group_for_row(row, &rows) {
-                        if let Some(SignalView::Waveform { signals, detail_alpha, .. }) = tiles.get(&group_path) {
+                        if let Some(SignalView::Waveform {
+                            signals,
+                            detail_alpha,
+                            ..
+                        }) = tiles.get(&group_path)
+                        {
                             if let Some(_signal) = signals.get(*signal_idx) {
                                 draw_signal_label(ctx, row.y, ROW_HEIGHT, name, *detail_alpha);
                             }
@@ -322,13 +398,7 @@ fn find_group_for_row(target: &LayoutRow, rows: &[LayoutRow]) -> Option<String> 
 // Label drawing helpers
 // ---------------------------------------------------------------------------
 
-fn draw_group_label(
-    ctx: &CanvasRenderingContext2d,
-    y: f64,
-    height: f64,
-    color: &str,
-    name: &str,
-) {
+fn draw_group_label(ctx: &CanvasRenderingContext2d, y: f64, height: f64, color: &str, name: &str) {
     // Colored accent bar on the left
     ctx.set_fill_style_str(color);
     ctx.set_global_alpha(0.6);
@@ -542,7 +612,8 @@ fn draw_signal_row(
             }
             SignalState::HighZ => {
                 ctx.set_stroke_style_str(SIGNAL_Z);
-                ctx.set_line_dash(&js_sys::Array::of2(&4.0.into(), &3.0.into())).unwrap();
+                ctx.set_line_dash(&js_sys::Array::of2(&4.0.into(), &3.0.into()))
+                    .unwrap();
                 ctx.begin_path();
                 ctx.move_to(draw_x, sig_mid);
                 ctx.line_to(draw_next_x, sig_mid);
@@ -563,7 +634,9 @@ fn draw_signal_row(
                 ctx.stroke();
             }
             SignalState::Data(label) => {
-                let hash = label.bytes().fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
+                let hash = label
+                    .bytes()
+                    .fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
                 let color = DATA_COLORS[hash as usize % DATA_COLORS.len()];
 
                 ctx.set_fill_style_str(color);
@@ -620,7 +693,10 @@ fn draw_block_overlay(
     }
 
     let x_start = raw_x_start.max(LABEL_WIDTH);
-    let x_end = raw_x_end.min(vp.canvas_width).max(x_start + 60.0).min(vp.canvas_width);
+    let x_end = raw_x_end
+        .min(vp.canvas_width)
+        .max(x_start + 60.0)
+        .min(vp.canvas_width);
 
     let block_top = y + 2.0;
     let block_height = height - 4.0;
@@ -678,7 +754,10 @@ fn draw_group_border(
     }
 
     let x_start = raw_x_start.max(LABEL_WIDTH);
-    let x_end = raw_x_end.min(vp.canvas_width).max(x_start + 60.0).min(vp.canvas_width);
+    let x_end = raw_x_end
+        .min(vp.canvas_width)
+        .max(x_start + 60.0)
+        .min(vp.canvas_width);
 
     ctx.save();
     ctx.set_global_alpha(0.25);
@@ -705,7 +784,12 @@ fn draw_status_overlay(ctx: &CanvasRenderingContext2d, vp: &Viewport) {
 
     ctx.set_fill_style_str(LABEL_BG);
     ctx.set_global_alpha(0.85);
-    ctx.fill_rect(vp.canvas_width - 300.0, vp.canvas_height - 24.0, 300.0, 24.0);
+    ctx.fill_rect(
+        vp.canvas_width - 300.0,
+        vp.canvas_height - 24.0,
+        300.0,
+        24.0,
+    );
     ctx.set_global_alpha(1.0);
     ctx.set_fill_style_str(TEXT_DIM);
     ctx.set_font("10px 'JetBrains Mono', monospace");

@@ -7,10 +7,7 @@ use shared::temporal::ViewQuery;
 
 use crate::AppState;
 
-pub async fn ws_handler(
-    ws: WebSocketUpgrade,
-    State(state): State<AppState>,
-) -> impl IntoResponse {
+pub async fn ws_handler(ws: WebSocketUpgrade, State(state): State<AppState>) -> impl IntoResponse {
     ws.on_upgrade(move |socket| handle_socket(socket, state))
 }
 
@@ -74,7 +71,11 @@ async fn handle_client_msg(msg: ClientMsg, state: &AppState) -> Vec<ServerMsg> {
             let results = registry.query(&query);
             results
                 .into_iter()
-                .map(|(path, view)| ServerMsg::Tile { path, view, generation })
+                .map(|(path, view)| ServerMsg::Tile {
+                    path,
+                    view,
+                    generation,
+                })
                 .collect()
         }
 
