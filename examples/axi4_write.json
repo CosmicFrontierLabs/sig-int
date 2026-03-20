@@ -1,0 +1,27 @@
+{
+  "signal": [
+    ["Clock",
+      {"name": "ACLK", "wave": "p......."}
+    ],
+    {},
+    ["Write Address Channel",
+      {"name": "AWVALID", "wave": "01..0..."},
+      {"name": "AWREADY", "wave": "0.1.0..."},
+      {"name": "AWADDR",  "wave": "x.=.x...", "data": ["ADDR"]}
+    ],
+    {},
+    ["Write Data Channel",
+      {"name": "WVALID", "wave": "0.1.1.0."},
+      {"name": "WREADY", "wave": "0..1.1.0"},
+      {"name": "WDATA",  "wave": "x..=.=.x", "data": ["D0", "D1"]},
+      {"name": "WLAST",  "wave": "0...1.0."}
+    ],
+    {},
+    ["Write Response Channel",
+      {"name": "BVALID", "wave": "0....10."},
+      {"name": "BREADY", "wave": "1......."}
+    ]
+  ],
+  "config": {"hscale": 2},
+  "head": {"text": "AXI4 Write Transaction"}
+}
