@@ -28,7 +28,7 @@ async fn handle_socket(mut socket: WebSocket, state: AppState) {
                     message: format!("Invalid message: {}", e),
                 };
                 let _ = socket
-                    .send(Message::Text(serde_json::to_string(&err).unwrap().into()))
+                    .send(Message::Text(serde_json::to_string(&err).unwrap()))
                     .await;
                 continue;
             }
@@ -38,7 +38,7 @@ async fn handle_socket(mut socket: WebSocket, state: AppState) {
 
         for resp in responses {
             let json = serde_json::to_string(&resp).unwrap();
-            if socket.send(Message::Text(json.into())).await.is_err() {
+            if socket.send(Message::Text(json)).await.is_err() {
                 return;
             }
         }

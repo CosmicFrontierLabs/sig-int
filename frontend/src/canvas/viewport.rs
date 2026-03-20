@@ -93,6 +93,7 @@ impl Viewport {
     }
 
     /// Convert an x pixel coordinate to a nanosecond timestamp.
+    #[allow(dead_code)]
     pub fn x_to_time(&self, x: f64) -> u64 {
         let frac = (x - LABEL_WIDTH) / self.signal_area_width();
         (self.time_range.start_ns as f64 + frac * self.time_range.duration_ns() as f64) as u64

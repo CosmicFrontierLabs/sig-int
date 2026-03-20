@@ -53,7 +53,7 @@ fn build_i2c_transaction(name: &str, start_ns: u64, label: &str, color: &str) ->
     // START condition: SCL stays high, SDA drops
     let data_start = start_ns + half_period;
     for i in 0..num_bits {
-        let t = data_start + i as u64 * clock_period_ns;
+        let t = data_start + i * clock_period_ns;
         scl_transitions.push(Transition {
             time_ns: t,
             state: SignalState::Low,

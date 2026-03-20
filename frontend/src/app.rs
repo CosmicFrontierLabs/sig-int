@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use futures::channel::mpsc;
-use futures::SinkExt;
 use futures::StreamExt;
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;

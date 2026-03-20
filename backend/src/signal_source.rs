@@ -198,10 +198,9 @@ impl SourceRegistry {
         };
 
         // Only emit if this group has signals (skip empty intermediate groups)
-        if let SignalView::Waveform { ref signals, .. } = view {
-            if !signals.is_empty() {
-                results.push((path, view));
-            }
+        let SignalView::Waveform { ref signals, .. } = view;
+        if !signals.is_empty() {
+            results.push((path, view));
         }
 
         // Recurse into child groups

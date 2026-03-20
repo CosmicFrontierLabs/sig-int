@@ -10,7 +10,7 @@ use super::viewport::Viewport;
 // Theme constants
 // ---------------------------------------------------------------------------
 const BG_PRIMARY: &str = "#0d1117";
-const BG_ALT: &str = "#161b22";
+const _BG_ALT: &str = "#161b22";
 const GRID_COLOR: &str = "#21262d";
 const TEXT_PRIMARY: &str = "#c9d1d9";
 const TEXT_DIM: &str = "#8b949e";
@@ -298,18 +298,16 @@ pub fn draw(
     // Draw group overlays and borders
     for span in &group_spans {
         if let Some(SignalView::Waveform {
-            overlay,
+            overlay: Some(block),
             detail_alpha,
             ..
         }) = tiles.get(&span.path)
         {
-            if let Some(block) = overlay {
-                let overlay_alpha = 1.0 - detail_alpha;
-                if overlay_alpha > 0.001 {
-                    draw_block_overlay(ctx, viewport, block, span.y, span.height, overlay_alpha);
-                }
-                draw_group_border(ctx, viewport, block, span.y, span.height);
+            let overlay_alpha = 1.0 - detail_alpha;
+            if overlay_alpha > 0.001 {
+                draw_block_overlay(ctx, viewport, block, span.y, span.height, overlay_alpha);
             }
+            draw_group_border(ctx, viewport, block, span.y, span.height);
         }
     }
 
@@ -359,17 +357,15 @@ pub fn draw(
                         name,
                         SIGNAL_LABEL_INDENT,
                     );
-                } else {
-                    if let Some(group_path) = find_group_for_row(row, &rows) {
-                        if let Some(SignalView::Waveform {
-                            signals,
-                            detail_alpha,
-                            ..
-                        }) = tiles.get(&group_path)
-                        {
-                            if let Some(_signal) = signals.get(*signal_idx) {
-                                draw_signal_label(ctx, row.y, ROW_HEIGHT, name, *detail_alpha);
-                            }
+                } else if let Some(group_path) = find_group_for_row(row, &rows) {
+                    if let Some(SignalView::Waveform {
+                        signals,
+                        detail_alpha,
+                        ..
+                    }) = tiles.get(&group_path)
+                    {
+                        if let Some(_signal) = signals.get(*signal_idx) {
+                            draw_signal_label(ctx, row.y, ROW_HEIGHT, name, *detail_alpha);
                         }
                     }
                 }
