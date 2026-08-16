@@ -1,0 +1,18 @@
+{
+  "signal": [
+    {"name": "clk", "wave": "p..........."},
+    {},
+    {"name": "addr",       "wave": "x.=........x", "data": ["BASE"]},
+    {"name": "burst_len",  "wave": "x.=........x", "data": ["4"]},
+    {"name": "burst_type", "wave": "x.=........x", "data": ["INCR"]},
+    {},
+    {"name": "valid",    "wave": "0.1...1...0."},
+    {"name": "ready",    "wave": "0..1.1.1.1.."},
+    {"name": "data",     "wave": "x..=.=.=.=.x", "data": ["D0","D1","D2","D3"]},
+    {},
+    {"name": "last",     "wave": "0........1.0"},
+    {"name": "response", "wave": "0........1.0"}
+  ],
+  "config": {"hscale": 2},
+  "head": {"text": "AXI INCR Burst Transaction (4-word)"}
+}

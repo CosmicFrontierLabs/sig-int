@@ -1,0 +1,23 @@
+{
+  "signal": [
+    ["Domain A (100MHz)",
+      {"name": "clk_a",   "wave": "p......."},
+      {"name": "data_a",  "wave": "x.=.....", "data": ["DATA"]},
+      {"name": "valid_a", "wave": "0.1.0..."}
+    ],
+    {},
+    ["Synchronizer",
+      {"name": "sync1", "wave": "0..1.0.."},
+      {"name": "sync2", "wave": "0...1.0."},
+      {"name": "pulse", "wave": "0...1..."}
+    ],
+    {},
+    ["Domain B (50MHz)",
+      {"name": "clk_b",   "wave": "p......."},
+      {"name": "data_b",  "wave": "x....=..", "data": ["DATA"]},
+      {"name": "valid_b", "wave": "0....1.0"}
+    ]
+  ],
+  "config": {"hscale": 4},
+  "head": {"text": "Clock Domain Crossing (2-FF Pulse Synchronizer)"}
+}

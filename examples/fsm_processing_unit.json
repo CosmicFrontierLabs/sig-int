@@ -1,0 +1,16 @@
+{
+  "signal": [
+    {"name": "clk",   "wave": "p......."},
+    {"name": "reset", "wave": "10......"},
+    {},
+    {"name": "state",      "wave": "2.=.=.=.", "data": ["IDLE","WAIT","PROC","DONE"]},
+    {"name": "start",      "wave": "0.1.0..."},
+    {"name": "done",       "wave": "0.....1."},
+    {"name": "busy",       "wave": "0..1..0."},
+    {},
+    {"name": "data_valid", "wave": "0...1.0."},
+    {"name": "data_out",   "wave": "x...=.x.", "data": ["RESULT"]}
+  ],
+  "config": {"hscale": 3},
+  "head": {"text": "FSM: Processing Unit State Transitions"}
+}

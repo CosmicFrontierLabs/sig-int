@@ -1,0 +1,18 @@
+{
+  "signal": [
+    {"name": "CK",    "wave": "p......."},
+    {"name": "CK_N",  "wave": "n......."},
+    {},
+    {"name": "CS_N",  "wave": "10......"},
+    {"name": "RAS_N", "wave": "1.0..1.."},
+    {"name": "CAS_N", "wave": "1..0.1.."},
+    {"name": "WE_N",  "wave": "1...01.."},
+    {},
+    {"name": "ADDR",  "wave": "x.=.=...", "data": ["ROW","COL"]},
+    {"name": "DQ",    "wave": "z....=.z", "data": ["DATA"]},
+    {"name": "DQS",   "wave": "z....p.z"},
+    {"name": "DM",    "wave": "z....0.z"}
+  ],
+  "config": {"hscale": 4},
+  "head": {"text": "DDR SDRAM Write Cycle"}
+}

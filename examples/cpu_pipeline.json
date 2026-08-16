@@ -1,0 +1,27 @@
+{
+  "signal": [
+    {"name": "clk", "wave": "p......."},
+    {},
+    ["Instruction Fetch",
+      {"name": "if_valid", "wave": "01......"},
+      {"name": "if_addr",  "wave": "x=======", "data": ["PC"]}
+    ],
+    {},
+    ["Decode",
+      {"name": "id_valid", "wave": "0.1....."},
+      {"name": "id_inst",  "wave": "x.======", "data": ["INST"]}
+    ],
+    {},
+    ["Execute",
+      {"name": "ex_valid",  "wave": "0..1...."},
+      {"name": "ex_result", "wave": "x..=====", "data": ["RES"]}
+    ],
+    {},
+    ["Writeback",
+      {"name": "wb_valid", "wave": "0...1..."},
+      {"name": "wb_data",  "wave": "x...====", "data": ["DATA"]}
+    ]
+  ],
+  "config": {"hscale": 3},
+  "head": {"text": "4-Stage CPU Pipeline"}
+}

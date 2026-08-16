@@ -1,0 +1,10 @@
+{
+  "signal": [
+    {"name": "SCLK", "wave": "0.p.p.p.p.p.p.p.p.0"},
+    {"name": "MOSI", "wave": "x.=.=.=.=.=.=.=.=.x", "data": ["7","6","5","4","3","2","1","0"]},
+    {"name": "MISO", "wave": "x.=.=.=.=.=.=.=.=.x", "data": ["7","6","5","4","3","2","1","0"]},
+    {"name": "CS_N", "wave": "10..................1"}
+  ],
+  "config": {"hscale": 1},
+  "head": {"text": "SPI Master-Slave Communication (Mode 0: CPOL=0, CPHA=0)"}
+}
