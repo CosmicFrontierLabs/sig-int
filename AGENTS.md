@@ -43,7 +43,7 @@ Backend computes tiles on demand; frontend never holds the full dataset.
 ## Tech Stack
 
 - **Frontend**: Yew 0.21 (CSR) + Trunk + web-sys Canvas2D
-- **Backend**: Axum 0.7 + tokio + ws-bridge + rust-embed
+- **Backend**: Axum 0.8 + tokio + ws-bridge + rust-embed
 - **Shared**: serde + ws-bridge endpoint types
 - **Parsing**: tree-sitter on frontend (highlighting), serde_json on backend (Phase 1), custom DSL compiler (Phase 4)
 - **Language**: Rust, frontend compiled to wasm32-unknown-unknown
